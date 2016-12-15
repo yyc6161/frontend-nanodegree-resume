@@ -14,14 +14,14 @@ var bio = {
 	biopic: "images/fry.jpg",
 	display: function(){
     	$('#header').prepend( HTMLheaderName.replace('%data%',this.name) + HTMLheaderRole.replace('%data%',this.role));
-    	$('#topContacts').append( HTMLmobile.replace('%data%',this.contacts.mobile) );
-    	$('#topContacts').append( HTMLemail.replace('%data%',this.contacts.email) );
-    	$('#topContacts').append( HTMLtwitter.replace('%data%',this.contacts.twitter) );
-    	$('#topContacts').append( HTMLgithub.replace('%data%',this.contacts.github) );
-    	$('#topContacts').append( HTMLlocation.replace('%data%',this.contacts.location) );
-    	$('#header').append( HTMLbioPic.replace('%data%',this.biopic) );
-    	$('#header').append( HTMLwelcomeMsg.replace('%data%',this.welcomeMessage) );
-    	$('#header').append( HTMLskillsStart);
+    	$('#topContacts,#footerContacts').append( HTMLmobile.replace('%data%',this.contacts.mobile),
+    		                                      HTMLemail.replace('%data%',this.contacts.email),
+    		                                      HTMLtwitter.replace('%data%',this.contacts.twitter),
+    		                                      HTMLgithub.replace('%data%',this.contacts.github),
+    		                                      HTMLlocation.replace('%data%',this.contacts.location) );
+    	$('#header').append( HTMLbioPic.replace('%data%',this.biopic),
+    						 HTMLwelcomeMsg.replace('%data%',this.welcomeMessage),
+    						 HTMLskillsStart);
     	this.skills.forEach(function(ele){
         	$('#skills').append( HTMLskills.replace('%data%',ele) );
     	});
@@ -29,37 +29,44 @@ var bio = {
 };
 
 var education = {
-    schools: {
+    schools: [
+    {
     	name: "ShaoGuan University",
         location: "LianHuaLu,ShenZhen,Guangdong",
         degree: "BA",
-        majors: "Electronic and Information Engineering",
+        majors: ["CLASS A","CLASS B","CLASS C"],
         dates: "2013-2017",
         url: "http://www.sgu.edu.cn"
-    },
-    onlineCourses: {
+    }
+    ],
+    onlineCourses: [
+    {
         title: "FrontEnd-Nanodegree",
         school: "Udacity",
         dates: "2016",
         url: "http://www.udacity.com"
-    },
+    }
+    ],
     display: function(){
     	$('#education').append(HTMLschoolStart);
     	$('.education-entry').addClass("schools");
-    	$('.education-entry').append( HTMLschoolName.replace('%data%',this.schools.name) 
-    		                        + HTMLschoolDegree.replace('%data%',this.schools.degree));
-    	$('.education-entry').append(HTMLschoolDates.replace('%data%',this.schools.dates));
-    	$('.education-entry').append(HTMLschoolLocation.replace('%data%',this.schools.location));
-    	$('.education-entry').append(HTMLschoolMajor.replace('%data%',this.schools.majors));
-    	$('.education-entry').find('a').first().attr('href',this.schools.url);
+    	this.schools.forEach(function(ele){
+    		$('.education-entry').append( HTMLschoolName.replace('%data%',ele.name).replace('#',ele.url) 
+    		                            + HTMLschoolDegree.replace('%data%',ele.degree),
+    		                              HTMLschoolDates.replace('%data%',ele.dates),
+    									  HTMLschoolLocation.replace('%data%',ele.location),
+    									  HTMLschoolMajor.replace('%data%',ele.majors));
+    	});
+    	
     	//Online Courses
     	$('#education').append(HTMLonlineClasses);
     	$('#education').append(HTMLschoolStart);
-    	$('.education-entry:eq(1)').append( HTMLonlineTitle.replace('%data%',this.onlineCourses.title) 
-    		                              + HTMLonlineSchool.replace('%data%',this.onlineCourses.school));
-    	$('.education-entry:eq(1)').append(HTMLonlineDates.replace('%data%',this.onlineCourses.dates));
-    	$('.education-entry:eq(1)').append(HTMLonlineURL.replace('%data%',this.onlineCourses.url));
-    	$('.education-entry:eq(1)').find('a').attr('href',this.onlineCourses.url);
+    	this.onlineCourses.forEach(function(ele){
+			$('.education-entry:eq(1)').append( HTMLonlineTitle.replace('%data%',ele.title).replace('#',ele.url) 
+    		                              	  + HTMLonlineSchool.replace('%data%',ele.school),
+    											HTMLonlineDates.replace('%data%',ele.dates),
+    											HTMLonlineURL.replace('%data%',ele.url).replace('#',ele.url) );
+    	});
     },
 };
 
@@ -84,27 +91,33 @@ var work = {
     	$('#workExperience').append(HTMLworkStart);
     	this.jobs.forEach(function(ele,index){
     		$('.work-entry').append( HTMLworkEmployer.replace('%data%',ele.employer) 
-    		                       + HTMLworkTitle.replace('%data%',ele.title));
-    		$('.work-entry').append(HTMLworkDates.replace('%data%',ele.dates));
-    		$('.work-entry').append(HTMLworkLocation.replace('%data%',ele.location));
-    		$('.work-entry').append(HTMLworkDescription.replace('%data%',ele.description));
+    		                       + HTMLworkTitle.replace('%data%',ele.title),
+    								 HTMLworkDates.replace('%data%',ele.dates),
+    								 HTMLworkLocation.replace('%data%',ele.location),
+    								 HTMLworkDescription.replace('%data%',ele.description));
         });
     }
 };
 
 var projects = {
-	projects: {
+	projects: [
+	{
 		title: "LinkUp Game", 
         dates: "9-2016",
         description: "It is a Game, I don't know how to descript it with my poor English, Sorry about it.",
-        images: "images/game.jpg"
-	},
+        images: ["images/game.jpg","images/game.jpg"]
+	}
+	],
     display: function(){
     	$('#projects').append(HTMLprojectStart);
-		$('.project-entry').append(HTMLprojectTitle.replace('%data%',this.projects.title));
-		$('.project-entry').append(HTMLprojectDates.replace('%data%',this.projects.dates));
-		$('.project-entry').append(HTMLprojectDescription.replace('%data%',this.projects.description));
-		$('.project-entry').append(HTMLprojectImage.replace('%data%',this.projects.images))
+    	this.projects.forEach(function(ele){
+			$('.project-entry').append(HTMLprojectTitle.replace('%data%',ele.title),
+									   HTMLprojectDates.replace('%data%',ele.dates),
+									   HTMLprojectDescription.replace('%data%',ele.description));
+			ele.images.forEach(function(e){
+				$('.project-entry').append(HTMLprojectImage.replace('%data%',e));
+			});
+    	});
     }
 };
 
@@ -114,17 +127,9 @@ var map = {
     }
 };
 
-var addFooterContacts = function(){
-	$('#footerContacts').append( HTMLmobile.replace('%data%',bio.contacts.mobile) );
-    $('#footerContacts').append( HTMLemail.replace('%data%',bio.contacts.email) );
-    $('#footerContacts').append( HTMLtwitter.replace('%data%',bio.contacts.twitter) );
-    $('#footerContacts').append( HTMLgithub.replace('%data%',bio.contacts.github) );
-    $('#footerContacts').append( HTMLlocation.replace('%data%',bio.contacts.location) );
-}
 
 bio.display();
 work.display();
 projects.display();
 education.display();
 map.display();
-addFooterContacts();

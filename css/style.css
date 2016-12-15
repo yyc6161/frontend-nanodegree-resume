@@ -129,7 +129,7 @@ a {
 
 /* TODO: Replace with image later */
 #header {
-  background-color: #484848;
+  background-color: #00695c;
 }
 
 .flex-box {
@@ -219,3 +219,20 @@ span {
     display: block;
   }
 }
+
+.dark-green {
+  background-color: #00695b;
+}
+
+.black {
+  color: #455a64;
+}
+
+.teal {
+  background-color: #e0f2f1;
+}
+
+.lime {
+  background-color: #f0f4c3;
+}
+

@@ -120,9 +120,9 @@ function initializeMap() {
     // adds the single location property from bio to the locations array
     locations.push(bio.contacts.location);
 
-    //education.schools.forEach(function(school){
-      locations.push(education.schools.location);
-    //});
+    education.schools.forEach(function(school){
+      locations.push(school.location);
+    });
 
     work.jobs.forEach(function(job){
       locations.push(job.location);
